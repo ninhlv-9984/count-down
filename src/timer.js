@@ -6,6 +6,7 @@ class Timer extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLoaded: false,
       currentTime: null,
       remainTimeInDay: null,
       remainTimeInYear: null
@@ -26,6 +27,7 @@ class Timer extends Component {
       const remainTimeInDay = this.getRemainTimeInDay(newDate);
       const remainDayOfTheYear = this.getRemainDayInYear();
       this.setState({
+        isLoaded: true,
         currentTime: newDate,
         remainTimeInDay: remainTimeInDay,
         remainTimeInYear: remainDayOfTheYear
@@ -51,12 +53,12 @@ class Timer extends Component {
   }
 
   render() {
-    const { currentTime, remainTimeInDay, remainTimeInYear } = this.state;
+    const { isLoaded ,currentTime, remainTimeInDay, remainTimeInYear } = this.state;
     return (
       <div className="timer">
         <h1>Count Down</h1>
         <div className="time-group">
-        <div className="text">Current Time: </div>
+        <div className="text">{isLoaded && 'Current Time: '}</div>
         <div className="current-time">
           <div className="date-time">
             { currentTime && currentTime.toLocaleDateString()}
@@ -68,14 +70,14 @@ class Timer extends Component {
         </div>
 
         <div className="time-group">
-          <div className="text">Remain Time of Today:</div>
+          <div className="text">{ isLoaded && 'Remain Time of Today:' }</div>
           <div className="date-time">
             { remainTimeInDay }
           </div>
         </div>
 
         <div className="time-group">
-          <div className="text">Remain day of the this year:</div>
+          <div className="text">{ isLoaded && 'Remain day of the this year:' }</div>
           <div className="date-time">
             { remainTimeInYear }
           </div>
