@@ -1,0 +1,25 @@
+
+.timer {
+  text-align: center;
+}
+
+h1 {
+  font-size: 3em;
+}
+
+.current-time {
+  display: flex;
+  justify-content: center;
+}
+
+.time-group {
+  margin-bottom: 60px;
+}
+
+.text {
+  font-size: 1.8em;
+}
+
+.current-hour {
+  margin-left: 10px;
+}
