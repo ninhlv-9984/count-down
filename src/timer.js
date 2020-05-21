@@ -1,4 +1,5 @@
 import React, { Component }  from 'react';
+import Unsplash, { toJson } from 'unsplash-js';
 import './timer.css'
 
 
@@ -15,10 +16,12 @@ class Timer extends Component {
     this.updateTimer = this.updateTimer.bind(this);
     this.getRemainTimeInDay = this.getRemainTimeInDay.bind(this);
     this.getRemainDayInYear = this.getRemainDayInYear.bind(this);
+    this.updateBackground = this.updateBackground.bind(this);
   }
 
   componentDidMount() {
     this.updateTimer();
+    this.updateBackground()
   }
 
   updateTimer() {
@@ -33,6 +36,19 @@ class Timer extends Component {
         remainTimeInYear: remainDayOfTheYear
       })
     }, 1000)
+  }
+
+  updateBackground() {
+    const unsplash = new Unsplash({ accessKey: process.env.REACT_APP_UNSPLASH_ACCESS_KEY, secret: process.env.REACT_APP_UNSPLASH_SECRET_KEY })
+    const page = Math.round(Math.random() * 50)
+    unsplash.search.photos("peaceful", page, 10, {orientation: "portrait"})
+      .then(toJson)
+      .then(json => {
+        const result = json.results;
+        const maxWidth = Math.max.apply(null, result.map(o => o.width));
+        const lagrestImage = result.filter(image => image.width === maxWidth);
+        document.body.style.backgroundImage = `url(${lagrestImage[0].urls.full})`
+      })
   }
 
   getRemainTimeInDay(newDate) {
