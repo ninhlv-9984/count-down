@@ -14,6 +14,11 @@ class Timer extends Component {
     this.getRemainTimeInDay = this.getRemainTimeInDay.bind(this);
     this.getRemainDayInYear = this.getRemainDayInYear.bind(this);
     this.updateBackground = this.updateBackground.bind(this);
+    this.calcTime = this.calcTime.bind(this);
+  }
+
+  componentWillUnmount() {
+    this.updateTimer();
   }
 
   componentDidMount() {
@@ -22,17 +27,22 @@ class Timer extends Component {
   }
 
   updateTimer() {
+    this.calcTime()
     setInterval(() => {
-      const newDate = new Date();
-      const remainTimeInDay = this.getRemainTimeInDay(newDate);
-      const remainDayOfTheYear = this.getRemainDayInYear();
-      this.setState({
-        isLoaded: true,
-        currentTime: newDate,
-        remainTimeInDay: remainTimeInDay,
-        remainTimeInYear: remainDayOfTheYear
-      })
+      this.calcTime();
     }, 1000)
+  }
+
+  calcTime() {
+    const newDate = new Date();
+    const remainTimeInDay = this.getRemainTimeInDay(newDate);
+    const remainDayOfTheYear = this.getRemainDayInYear();
+    this.setState({
+      isLoaded: true,
+      currentTime: newDate,
+      remainTimeInDay: remainTimeInDay,
+      remainTimeInYear: remainDayOfTheYear
+    })
   }
 
   updateBackground() {
