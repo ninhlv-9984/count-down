@@ -1,8 +1,5 @@
 import React, { Component }  from 'react';
-import Unsplash, { toJson } from 'unsplash-js';
 import './timer.css'
-
-
 class Timer extends Component {
   constructor(props) {
     super(props);
@@ -39,16 +36,7 @@ class Timer extends Component {
   }
 
   updateBackground() {
-    const unsplash = new Unsplash({ accessKey: process.env.REACT_APP_UNSPLASH_ACCESS_KEY, secret: process.env.REACT_APP_UNSPLASH_SECRET_KEY })
-    const page = Math.round(Math.random() * 50)
-    unsplash.search.photos("peaceful", page, 10, {orientation: "portrait"})
-      .then(toJson)
-      .then(json => {
-        const result = json.results;
-        const maxWidth = Math.max.apply(null, result.map(o => o.width));
-        const lagrestImage = result.filter(image => image.width === maxWidth);
-        document.body.style.backgroundImage = `url(${lagrestImage[0].urls.full})`
-      })
+    document.body.style.backgroundImage = "url(/bgg.jpeg)";
   }
 
   getRemainTimeInDay(newDate) {
@@ -63,7 +51,7 @@ class Timer extends Component {
   getRemainDayInYear() {
     const currentTime = new Date();
     const currentYear = currentTime.getFullYear();
-    const endOfYear = new Date(currentYear, 11, 31, 23, 59, 59);
+    const endOfYear = new Date(currentYear, 9, 28, 23, 59, 59);
     const remainingDays = Math.floor((endOfYear - currentTime) / 1000 / 3600 / 24);
     return remainingDays;
   }
@@ -93,7 +81,7 @@ class Timer extends Component {
         </div>
 
         <div className="time-group">
-          <div className="text">{ isLoaded && 'Remain day of the this year:' }</div>
+          <div className="text">{ isLoaded && 'Remain day for first 6 months target:' }</div>
           <div className="date-time">
             { remainTimeInYear }
           </div>
